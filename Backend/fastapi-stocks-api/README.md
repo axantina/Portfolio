@@ -1,2 +1,7 @@
 # fastapi-stocks-api
-RESTful API built with FastAPI for managing stock inventory (CRUD operations)
+Features
+- API Endpoints
+- How to Run
+- Example Request
+- Example Response
+- Future Improvements

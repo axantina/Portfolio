@@ -4,21 +4,13 @@ from models import User, Transactions
 
 app = FastAPI()
 
-#CREATE
 @app.post("/users")
 def add_user(user: User):
     cursor.execute(
-        "SELECT * FROM users WHERE email=?",(user.email,)
+        "INSERT INTO users(name) VALUES (?)", (user.name,)
     )
-    existing_user = cursor.fetchone()
-    if existing_user:
-        return{"error": "email has registered"}
-    else:
-        cursor.execute(
-            "INSERT INTO users(name, email, password) VALUES (?,?,?)", (user.name,user.email,user.password,)
-        )
-        conn.commit()
-        return{"message": "new user added"}
+    conn.commit()
+    return{"message": "new user added"}
 
 @app.post("/transactions")
 def add_transactions(transactions: Transactions):
@@ -35,9 +27,7 @@ def add_transactions(transactions: Transactions):
         return{"message": "new transaction added"}
     else:
         return{"error": "the id not exists"}
-
-
-#READ
+    
 @app.get("/users")
 def get_users():
     cursor.execute(
@@ -98,7 +88,37 @@ def get_all_transactions():
         ]
     else:
         return[]
-
+    
+@app.delete("/transactions/{id}")
+def delete_transaction(id: int):
+    cursor.execute(
+        "SELECT id FROM transactions WHERE id=?",(id,)
+    )    
+    txs= cursor.fetchone()
+    if txs:
+        cursor.execute(
+        "DELETE FROM transactions WHERE id=?", (id,)
+        )
+        conn.commit()
+        return{"message": "data deleted"}
+    else:
+        return{"message": "the id is not exist"}
+    
+@app.put("/transactions/{id}")
+def update_transaction(transactions: Transactions, id: int):
+    cursor.execute(
+        "SELECT * FROM transactions WHERE id=?",(id,)
+    )
+    txs = cursor.fetchone()
+    if txs:
+        cursor.execute(
+            "UPDATE transactions SET item=?, price=?, date=? WHERE id=?", (transactions.item, transactions.price, transactions.date, id,)
+        )
+        conn.commit()
+        return{"message": "data updated"}
+    else:
+        return{"error": "the id doess not exist"}
+    
 @app.get("/transactions")
 def get_min_price(min_price: int):
     cursor.execute("SELECT id, user_id, item, price, date FROM transactions WHERE price>=?", (min_price,))
@@ -115,40 +135,4 @@ def get_min_price(min_price: int):
         ]
     else:
         return[]
-
-#UPDATE    
-@app.put("/transactions/{id}")
-def update_transaction(transactions: Transactions, id: int):
-    cursor.execute(
-        "SELECT * FROM transactions WHERE id=?",(id,)
-    )
-    txs = cursor.fetchone()
-    if txs:
-        cursor.execute(
-            "UPDATE transactions SET item=?, price=?, date=? WHERE id=?", (transactions.item, transactions.price, transactions.date, id,)
-        )
-        conn.commit()
-        return{"message": "data updated"}
-    else:
-        return{"error": "the id doess not exist"}
-
-#DELETE
-@app.delete("/transactions/{id}")
-def delete_transaction(id: int):
-    cursor.execute(
-        "SELECT id FROM transactions WHERE id=?",(id,)
-    )    
-    txs= cursor.fetchone()
-    if txs:
-        cursor.execute(
-        "DELETE FROM transactions WHERE id=?", (id,)
-        )
-        conn.commit()
-        return{"message": "data deleted"}
-    else:
-        return{"message": "the id is not exist"}
-
-
-    
-
 

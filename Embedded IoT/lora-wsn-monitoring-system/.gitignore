@@ -1,0 +1,78 @@
+# =========================
+# Secrets / Local Config
+# =========================
+config.h
+secrets.h
+.env
+.env.*
+*.local.php
+server/config.php
+
+# =========================
+# Arduino / ESP32 Build Files
+# =========================
+build/
+.cache/
+arduino_build_*/
+arduino_cache_*/
+*.elf
+*.hex
+*.bin
+*.map
+*.o
+*.d
+*.tmp
+
+# =========================
+# PlatformIO files, if used later
+# =========================
+.pio/
+.pioenvs/
+.piolibdeps/
+libdeps/
+
+# =========================
+# PHP / Composer, if used later
+# =========================
+vendor/
+composer.phar
+*.log
+
+# =========================
+# Database / Local Data
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+database/dump/
+database/backup/
+*.sql
+!database/schema.sql
+!database/sample-data.sql
+
+# =========================
+# Raw experiment / SD card logs
+# =========================
+data/raw/
+logs/
+sd-card-data/
+
+# =========================
+# Office / Temporary Files
+# =========================
+~$*.docx
+*.bak
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
