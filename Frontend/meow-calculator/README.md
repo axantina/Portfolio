@@ -4,7 +4,7 @@ Meow Calculator is a cute cat-themed basic calculator built with HTML, CSS, and 
 
 ## 🌐 Live Demo
 
-[View Live Demo](https://axantina.github.io/meow-calculator/)
+[View Live Demo](https://axantina.github.io/Portfolio/Frontend/meow-calculator/)
 
 ## ✨ Features
 
